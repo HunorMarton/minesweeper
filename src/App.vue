@@ -8,6 +8,7 @@
 
 <script>
 import Tile from "./components/Tile";
+import { generateTiles } from "./utils";
 
 export default {
   name: "App",
@@ -16,7 +17,7 @@ export default {
   },
   data: function () {
     return {
-      tiles: [0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0],
+      tiles: generateTiles(),
     };
   },
 };
