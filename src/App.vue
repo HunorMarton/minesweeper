@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="board">
-      <Tile v-for="index in 100" :key="index" :index="index" />
+      <Tile v-for="(tile, index) in tiles" :key="index" :tile="tile" />
     </div>
   </div>
 </template>
@@ -13,6 +13,11 @@ export default {
   name: "App",
   components: {
     Tile,
+  },
+  data: function () {
+    return {
+      tiles: [0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0],
+    };
   },
 };
 </script>

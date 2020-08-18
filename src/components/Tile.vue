@@ -1,11 +1,11 @@
 <template>
-  <div class="tile">{{ index }}</div>
+  <div class="tile">{{ tile }}</div>
 </template>
 
 <script>
 export default {
   props: {
-    index: Number,
+    tile: Number,
   },
 };
 </script>
