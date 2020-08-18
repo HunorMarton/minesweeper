@@ -1,7 +1,14 @@
 <template>
   <div id="app">
-    <div class="board">
-      <Tile v-for="(tile, index) in tiles" :key="index" :tile="tile" />
+    <div>
+      <header>
+        <div>14</div>
+        <button @click="reset">🙂</button>
+        <div>0</div>
+      </header>
+      <div class="board">
+        <Tile v-for="(tile, index) in tiles" :key="index" :tile="tile" />
+      </div>
     </div>
   </div>
 </template>
@@ -20,6 +27,11 @@ export default {
       tiles: generateTiles(),
     };
   },
+  methods: {
+    reset() {
+      this.tiles = generateTiles();
+    },
+  },
 };
 </script>
 
@@ -28,6 +40,17 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+  font-size: 2em;
+}
+
+button {
+  font-size: inherit;
 }
 
 .board {
