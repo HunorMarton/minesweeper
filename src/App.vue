@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <Tile :index="1" />
-    <Tile :index="2" />
-    <Tile :index="3" />
+    <div class="board">
+      <Tile v-for="index in 100" :key="index" :index="index" />
+    </div>
   </div>
 </template>
 
@@ -16,3 +16,17 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+#app {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.board {
+  display: grid;
+  grid-template-rows: repeat(10, auto);
+  grid-template-columns: repeat(10, auto);
+}
+</style>
