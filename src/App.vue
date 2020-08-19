@@ -40,6 +40,8 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: 700;
 }
 
 header {

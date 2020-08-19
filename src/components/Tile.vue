@@ -1,11 +1,28 @@
 <template>
-  <div class="tile">{{ tile }}</div>
+  <div class="tile" :style="{ color: color }">{{ content }}</div>
 </template>
 
 <script>
 export default {
   props: {
-    tile: Number,
+    tile: Object,
+  },
+  computed: {
+    content() {
+      if (this.tile.bomb) return "💣";
+      if (this.tile.surroundingBombs) return this.tile.surroundingBombs;
+      return "";
+    },
+    color() {
+      if (this.tile.surroundingBombs == 1) return "blue";
+      if (this.tile.surroundingBombs == 2) return "green";
+      if (this.tile.surroundingBombs == 3) return "red";
+      if (this.tile.surroundingBombs == 4) return "purple";
+      if (this.tile.surroundingBombs == 5) return "brown";
+      if (this.tile.surroundingBombs == 6) return "turqouise";
+      if (this.tile.surroundingBombs == 7) return "black";
+      return "gray";
+    },
   },
 };
 </script>
