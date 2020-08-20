@@ -3,7 +3,7 @@
     <div>
       <header>
         <div>{{ bombsRemaining }}</div>
-        <button @click="reset">🙂</button>
+        <button @click="reset">{{ gameStatus }}</button>
         <div>0</div>
       </header>
       <div class="board">
@@ -36,6 +36,18 @@ export default {
     bombsRemaining() {
       const totalFlags = this.tiles.filter((tile) => tile.flagged).length;
       return totalNumberOfBombs - totalFlags;
+    },
+    gameFailed() {
+      return this.tiles.find((tile) => tile.bomb && tile.revealed);
+    },
+    gameWon() {
+      const tilesRevealed = this.tiles.filter((tile) => tile.revealed).length;
+      return tilesRevealed + totalNumberOfBombs == 100;
+    },
+    gameStatus() {
+      if (this.gameFailed) return "😔";
+      if (this.gameWon) return "😎";
+      return "🙂";
     },
   },
   methods: {
