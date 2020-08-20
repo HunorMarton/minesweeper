@@ -1,5 +1,5 @@
 <template>
-  <div class="tile" :style="{ color: color }">{{ content }}</div>
+  <div class="tile" :style="{ color: color }" @click.right.prevent="flag">{{ content }}</div>
 </template>
 
 <script>
@@ -9,6 +9,7 @@ export default {
   },
   computed: {
     content() {
+      if (this.tile.flagged) return "❌";
       if (this.tile.bomb) return "💣";
       if (this.tile.surroundingBombs) return this.tile.surroundingBombs;
       return "";
@@ -22,6 +23,11 @@ export default {
       if (this.tile.surroundingBombs == 6) return "turqouise";
       if (this.tile.surroundingBombs == 7) return "black";
       return "gray";
+    },
+  },
+  methods: {
+    flag() {
+      this.tile.flagged = !this.tile.flagged;
     },
   },
 };

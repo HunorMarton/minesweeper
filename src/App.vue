@@ -2,7 +2,7 @@
   <div id="app">
     <div>
       <header>
-        <div>14</div>
+        <div>{{ bombsRemaining }}</div>
         <button @click="reset">🙂</button>
         <div>0</div>
       </header>
@@ -15,7 +15,7 @@
 
 <script>
 import Tile from "./components/Tile";
-import { generateTiles } from "./utils";
+import { generateTiles, totalNumberOfBombs } from "./utils";
 
 export default {
   name: "App",
@@ -26,6 +26,12 @@ export default {
     return {
       tiles: generateTiles(),
     };
+  },
+  computed: {
+    bombsRemaining() {
+      const totalFlags = this.tiles.filter((tile) => tile.flagged).length;
+      return totalNumberOfBombs - totalFlags;
+    },
   },
   methods: {
     reset() {
