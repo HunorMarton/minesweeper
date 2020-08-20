@@ -15,6 +15,7 @@ export default {
   computed: {
     content() {
       if (this.tile.flagged) return "❌";
+      if (!this.tile.revealed) return "";
       if (this.tile.bomb) return "💣";
       if (this.tile.surroundingBombs) return this.tile.surroundingBombs;
       return "";
@@ -35,7 +36,9 @@ export default {
     },
   },
   methods: {
-    reveal() {},
+    reveal() {
+      this.$emit("reveal");
+    },
     flag() {
       this.tile.flagged = !this.tile.flagged;
     },

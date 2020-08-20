@@ -7,7 +7,7 @@
         <div>0</div>
       </header>
       <div class="board">
-        <Tile v-for="(tile, index) in tiles" :key="index" :tile="tile" />
+        <Tile v-for="(tile, index) in tiles" :key="index" :tile="tile" @reveal="reveal(index)" />
       </div>
     </div>
   </div>
@@ -15,7 +15,12 @@
 
 <script>
 import Tile from "./components/Tile";
-import { generateTiles, totalNumberOfBombs } from "./utils";
+import {
+  generateTiles,
+  totalNumberOfBombs,
+  getCoordinates,
+  getIndex,
+} from "./utils";
 
 export default {
   name: "App",
@@ -36,6 +41,27 @@ export default {
   methods: {
     reset() {
       this.tiles = generateTiles();
+    },
+    reveal(index) {
+      if (index == undefined) return;
+
+      const tile = this.tiles[index];
+      if (!tile.revealed) {
+        tile.revealed = true;
+
+        if (!tile.bomb && tile.surroundingBombs == 0) {
+          const { row, column } = getCoordinates(index);
+
+          this.reveal(getIndex(row - 1, column - 1));
+          this.reveal(getIndex(row - 1, column - 0));
+          this.reveal(getIndex(row - 1, column + 1));
+          this.reveal(getIndex(row - 0, column - 1));
+          this.reveal(getIndex(row - 0, column + 1));
+          this.reveal(getIndex(row + 1, column - 1));
+          this.reveal(getIndex(row + 1, column - 0));
+          this.reveal(getIndex(row + 1, column + 1));
+        }
+      }
     },
   },
 };
