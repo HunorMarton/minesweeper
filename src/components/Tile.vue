@@ -1,5 +1,10 @@
 <template>
-  <div class="tile" :style="{ color: color }" @click.right.prevent="flag">{{ content }}</div>
+  <div
+    class="tile"
+    :style="{ color: color, backgroundColor: backgroundColor }"
+    @click="reveal"
+    @click.right.prevent="flag"
+  >{{ content }}</div>
 </template>
 
 <script>
@@ -24,8 +29,13 @@ export default {
       if (this.tile.surroundingBombs == 7) return "black";
       return "gray";
     },
+    backgroundColor() {
+      if (this.tile.revealed) return "#eee";
+      return "white";
+    },
   },
   methods: {
+    reveal() {},
     flag() {
       this.tile.flagged = !this.tile.flagged;
     },

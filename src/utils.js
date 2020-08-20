@@ -42,6 +42,6 @@ export function generateTiles() {
     if (array[getIndex(row + 1, column - 0)]) surroundingBombs++;
     if (array[getIndex(row + 1, column + 1)]) surroundingBombs++;
 
-    return { bomb, surroundingBombs, flagged: false };
+    return { bomb, surroundingBombs, flagged: false, revealed: false };
   });
 }
