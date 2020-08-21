@@ -4,7 +4,7 @@
       <header>
         <div>{{ bombsRemaining }}</div>
         <button @click="reset">{{ gameStatus }}</button>
-        <div>0</div>
+        <Timer :gameInProgress="gameInProgress" />
       </header>
       <div class="board">
         <Tile v-for="(tile, index) in tiles" :key="index" :tile="tile" @reveal="reveal(index)" />
@@ -15,6 +15,7 @@
 
 <script>
 import Tile from "./components/Tile";
+import Timer from "./components/Timer";
 import {
   generateTiles,
   totalNumberOfBombs,
@@ -26,6 +27,7 @@ export default {
   name: "App",
   components: {
     Tile,
+    Timer,
   },
   data: function () {
     return {
@@ -36,6 +38,11 @@ export default {
     bombsRemaining() {
       const totalFlags = this.tiles.filter((tile) => tile.flagged).length;
       return totalNumberOfBombs - totalFlags;
+    },
+    gameInProgress() {
+      if (this.gameWon || this.gameFailed) return false;
+      if (this.tiles.find((tile) => tile.revealed)) return true;
+      return false;
     },
     gameFailed() {
       return this.tiles.find((tile) => tile.bomb && tile.revealed);
