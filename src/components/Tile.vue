@@ -1,16 +1,23 @@
 <template>
   <div
     class="tile"
-    :style="{ color: color, backgroundColor: backgroundColor }"
+    :class="{
+      revealed: tile.revealed,
+      'wrong-pick': wrongPick,
+    }"
+    :style="{ color: color }"
     @click="reveal"
     @click.right.prevent="flag"
-  >{{ content }}</div>
+  >
+    {{ content }}
+  </div>
 </template>
 
 <script>
 export default {
   props: {
     tile: Object,
+    gameFailed: Boolean,
   },
   computed: {
     content() {
@@ -30,9 +37,12 @@ export default {
       if (this.tile.surroundingBombs == 7) return "black";
       return "gray";
     },
-    backgroundColor() {
-      if (this.tile.revealed) return "#eee";
-      return "white";
+    wrongPick() {
+      return (
+        this.gameFailed &&
+        ((this.tile.bomb && this.tile.revealed) ||
+          (!this.tile.bomb && this.tile.flagged))
+      );
     },
   },
   methods: {
@@ -40,7 +50,7 @@ export default {
       this.$emit("reveal");
     },
     flag() {
-      this.tile.flagged = !this.tile.flagged;
+      this.$emit("flag");
     },
   },
 };
@@ -48,11 +58,27 @@ export default {
 
 <style scoped>
 .tile {
-  width: 50px;
-  height: 50px;
-  border: 1px solid lightgray;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: var(--size);
+  height: var(--size);
+  line-height: var(--size);
+}
+
+.tile:not(.revealed) {
+  --shadow-1: calc(var(--size) / 12.5);
+  --shadow-2: calc(var(--size) / 12.5 * -1);
+  box-shadow: inset var(--shadow-1) var(--shadow-1) 0px 0px
+      rgba(255, 255, 255, 0.45),
+    inset var(--shadow-2) var(--shadow-2) 0px 0px rgba(0, 0, 0, 0.25);
+  border-radius: calc(var(--size) / 10);
+  cursor: pointer;
+}
+
+.tile.revealed {
+  border: 1px solid #bdbdbd;
+  box-sizing: border-box;
+}
+
+.tile.wrong-pick {
+  background-color: lightcoral;
 }
 </style>
